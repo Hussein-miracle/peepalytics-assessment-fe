@@ -1,14 +1,15 @@
 "use client";
 import axiosInstance from "@/services/axiosInstance";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { CreditCard, PaymentForm } from "react-square-web-payments-sdk";
 import { toast } from "sonner";
 
 const handleTokenizedResponse = async (
   token: { token?: string },
-  buyer: unknown
+  _buyer: unknown
 ) => {
-  console.log({ token }, "TOKEN RESPNMOSE");
+  console.log({ token ,_buyer}, "TOKEN RESPNMOSE");
   try {
     const data = {
       sourceId: token?.token,
@@ -18,7 +19,9 @@ const handleTokenizedResponse = async (
     const response = await axiosInstance.post("/process-payment", data);
 
     console.log({ response }, "payment process response");
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     toast.error(error?.message || "An error occured");
   }
 };
